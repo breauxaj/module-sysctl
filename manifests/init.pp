@@ -2,29 +2,14 @@
 #
 # This class configures sysctl
 #
-# Parameters:
-#
-#  value:
-#    Assigns value to key/title
-#
 # Actions:
-#   - Sets sysctl parameters
+#   - Sets sysctl parameters (via hiera lookup)
 #
 # Sample Usage:
 #
-#    sysctl {
-#      'kernel.exec-shield': value => 1;
-#    }
+#    class { 'sysctl': }
 #
-class sysctl (
-  $value
-) inherits ::sysctl::params {
-  $key = $title
-
-  augeas { "sysctl_conf/${key}":
-    context => $::sysctl::params::sysctl_context,
-    onlyif  => "get ${key} != '${value}'",
-    changes => "set ${key} '${value}'",
-    notify  => Exec['sysctl'],
-  }
+class sysctl {
+  $sysctl_config = hiera('sysctl',{})
+  create_resources('sysctl::config',$sysctl_config)
 }

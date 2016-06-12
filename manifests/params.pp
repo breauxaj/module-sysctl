@@ -15,7 +15,7 @@ class sysctl::params {
         ensure => present,
         owner  => 'root',
         group  => 'root',
-        mode   => '0444',
+        mode   => '0644',
       }
 
       exec { '/sbin/sysctl -e -p':

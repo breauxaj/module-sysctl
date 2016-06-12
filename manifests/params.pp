@@ -8,7 +8,7 @@
 class sysctl::params {
   case $::operatingsystem {
     'Amazon': {
-      $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
+      $sysctl_config  = '/etc/sysctl.conf'
       $sysctl_context = "/files/${sysctl_config}"
 
       file { $sysctl_config:

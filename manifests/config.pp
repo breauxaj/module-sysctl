@@ -1,7 +1,7 @@
 define sysctl::config (
   $value
 ) {
-  ::sysctl
+  include ::sysctl
 
   $key = $title
 

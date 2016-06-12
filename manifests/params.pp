@@ -54,7 +54,7 @@ class sysctl::params {
             mode   => '0644',
           }
     
-          exec { '/sbin/sysctl -e -p':
+          exec { '/sbin/sysctl --system':
             alias       => 'sysctl',
             refreshonly => true,
             subscribe   => File[$sysctl_config],

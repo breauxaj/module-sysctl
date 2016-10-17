@@ -29,14 +29,14 @@ class sysctl::params {
         '6': {
           $sysctl_config  = '/etc/sysctl.conf'
           $sysctl_context = "/files/${sysctl_config}"
-    
+
           file { $sysctl_config:
             ensure => present,
             owner  => 'root',
             group  => 'root',
             mode   => '0644',
           }
-    
+
           exec { '/sbin/sysctl -e -p':
             alias       => 'sysctl',
             refreshonly => true,
@@ -46,14 +46,14 @@ class sysctl::params {
         '7': {
           $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
           $sysctl_context = "/files/${sysctl_config}"
-    
+
           file { $sysctl_config:
             ensure => present,
             owner  => 'root',
             group  => 'root',
             mode   => '0644',
           }
-    
+
           exec { '/sbin/sysctl --system':
             alias       => 'sysctl',
             refreshonly => true,
@@ -70,14 +70,14 @@ class sysctl::params {
         '8': {
           $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
           $sysctl_context = "/files/${sysctl_config}"
-    
+
           file { $sysctl_config:
             ensure => present,
             owner  => 'root',
             group  => 'root',
             mode   => '0644',
           }
-    
+
           exec { '/sbin/sysctl --system':
             alias       => 'sysctl',
             refreshonly => true,

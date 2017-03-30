@@ -1,0 +1,9 @@
+sysctl:    
+  kernel.exec-shield:
+    value: '2'
+  kernel.randomize_va_space:
+    value: '2'
+  net.ipv4.ip_forward:
+    value: '0'
+  net.ipv4.conf.default.rp_filter:
+    value: '1'

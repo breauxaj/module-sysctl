@@ -25,68 +25,37 @@ class sysctl::params {
       }
     }
     'CentOS', 'OracleLinux', 'RedHat': {
-      case $::operatingsystemmajrelease {
-        '6': {
-          $sysctl_config  = '/etc/sysctl.conf'
-          $sysctl_context = "/files/${sysctl_config}"
+      $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
+      $sysctl_context = "/files/${sysctl_config}"
 
-          file { $sysctl_config:
-            ensure => present,
-            owner  => 'root',
-            group  => 'root',
-            mode   => '0644',
-          }
+      file { $sysctl_config:
+        ensure => present,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+      }
 
-          exec { '/sbin/sysctl -e -p':
-            alias       => 'sysctl',
-            refreshonly => true,
-            subscribe   => File[$sysctl_config],
-          }
-        }
-        '7': {
-          $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
-          $sysctl_context = "/files/${sysctl_config}"
-
-          file { $sysctl_config:
-            ensure => present,
-            owner  => 'root',
-            group  => 'root',
-            mode   => '0644',
-          }
-
-          exec { '/sbin/sysctl --system':
-            alias       => 'sysctl',
-            refreshonly => true,
-            subscribe   => File[$sysctl_config],
-          }
-        }
-        default: {
-          fail("The ${module_name} module is not supported on an ${::operatingsystem} ${::operatingsystemmajrelease} distribution.")
-        }
+      exec { '/sbin/sysctl --system':
+        alias       => 'sysctl',
+        refreshonly => true,
+        subscribe   => File[$sysctl_config],
       }
     }
     'Debian': {
-      case $::operatingsystemmajrelease {
-        '8': {
-          $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
-          $sysctl_context = "/files/${sysctl_config}"
+      $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
+      $sysctl_context = "/files/${sysctl_config}"
 
-          file { $sysctl_config:
-            ensure => present,
-            owner  => 'root',
-            group  => 'root',
-            mode   => '0644',
-          }
+      file { $sysctl_config:
+        ensure => present,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0644',
+      }
 
-          exec { '/sbin/sysctl --system':
-            alias       => 'sysctl',
-            refreshonly => true,
-            subscribe   => File[$sysctl_config],
-          }
-        }
-        default: {
-          fail("The ${module_name} module is not supported on an ${::operatingsystem} ${::operatingsystemmajrelease} distribution.")
-        }
+      exec { '/sbin/sysctl --system':
+        alias       => 'sysctl',
+        refreshonly => true,
+        subscribe   => File[$sysctl_config],
       }
     }
     default: {

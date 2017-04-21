@@ -6,72 +6,81 @@
 #   - Defines numerous parameters used by other classes
 #
 class sysctl::params {
-  case $::operatingsystem {
-    'Amazon': {
-      case $::operatingsystemmajrelease {
-        default: {
-          $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
-          $sysctl_context = "/files/${sysctl_config}"
-
-          file { $sysctl_config:
-            ensure => present,
-            owner  => 'root',
-            group  => 'root',
-            mode   => '0644',
-          }
-
-          exec { '/sbin/sysctl -e -p':
-            alias       => 'sysctl',
-            refreshonly => true,
-            subscribe   => File[$sysctl_config],
-          }
-        }
-      }
-    }
-    'CentOS', 'OracleLinux', 'RedHat': {
-      case $::operatingsystemmajrelease {
-        default: {
-          $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
-          $sysctl_context = "/files/${sysctl_config}"
-
-          file { $sysctl_config:
-            ensure => present,
-            owner  => 'root',
-            group  => 'root',
-            mode   => '0644',
-          }
-
-          exec { '/sbin/sysctl --system':
-            alias       => 'sysctl',
-            refreshonly => true,
-            subscribe   => File[$sysctl_config],
-          }
-        }
-      }
-    }
+  case $::osfamily {
     'Debian': {
-      case $::operatingsystemmajrelease {
+      case $::operatingsystem {
         default: {
-          $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
-          $sysctl_context = "/files/${sysctl_config}"
+          case $::operatingsystemmajrelease {
+            default: {
+              $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
+              $sysctl_context = "/files/${sysctl_config}"
 
-          file { $sysctl_config:
-            ensure => present,
-            owner  => 'root',
-            group  => 'root',
-            mode   => '0644',
+              file { $sysctl_config:
+                ensure => present,
+                owner  => 'root',
+                group  => 'root',
+                mode   => '0644',
+              }
+
+              exec { '/sbin/sysctl --system':
+                alias       => 'sysctl',
+                refreshonly => true,
+                subscribe   => File[$sysctl_config],
+              }
+            }
           }
+        }
+      }
+    }
+    'RedHat': {
+      case $::operatingsystem {
+        'Amazon': {
+          case $::operatingsystemmajrelease {
+            default: {
+              $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
+              $sysctl_context = "/files/${sysctl_config}"
 
-          exec { '/sbin/sysctl --system':
-            alias       => 'sysctl',
-            refreshonly => true,
-            subscribe   => File[$sysctl_config],
+              file { $sysctl_config:
+                ensure => present,
+                owner  => 'root',
+                group  => 'root',
+                mode   => '0644',
+              }
+
+              exec { '/sbin/sysctl -e -p':
+                alias       => 'sysctl',
+                refreshonly => true,
+                subscribe   => File[$sysctl_config],
+              }
+            }
+          }
+        }
+        default: {
+          case $::operatingsystemmajrelease {
+            default: {
+              $sysctl_config  = '/etc/sysctl.d/50-puppet.conf'
+              $sysctl_context = "/files/${sysctl_config}"
+
+              file { $sysctl_config:
+                ensure => present,
+                owner  => 'root',
+                group  => 'root',
+                mode   => '0644',
+              }
+
+              exec { '/sbin/sysctl --system':
+                alias       => 'sysctl',
+                refreshonly => true,
+                subscribe   => File[$sysctl_config],
+              }
+            }
           }
         }
       }
     }
     default: {
-      fail("The ${module_name} module is not supported on an ${::operatingsystem} based system.")
+      fail("The ${module_name} module is not supported on an ${::osfamily} based system.")
     }
   }
+
 }

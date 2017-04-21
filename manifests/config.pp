@@ -11,4 +11,5 @@ define sysctl::config (
     changes => "set ${key} '${value}'",
     notify  => Exec['sysctl'],
   }
+
 }

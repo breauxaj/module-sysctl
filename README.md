@@ -6,7 +6,7 @@ Manages the sysctl configuration.
 Samples
 -------
 ```
-sysctl {
+sysctl::config {
   'fs.file-max':                  value => 6553600;
   'kernel.randomize_va_space':    value => 1;
   'kernel.sem':                   value => '250 256000 32 1024';

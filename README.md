@@ -26,3 +26,11 @@ sysctl:
   kernel.randomize_va_space:
     value: '1'
 ```
+
+License
+-------
+GPL3
+
+Contact
+-------
+breauxaj AT gmail DOT com

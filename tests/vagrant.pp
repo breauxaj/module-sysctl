@@ -1,13 +1,6 @@
 node default {
   include ::sysctl
 
-  case $::operatingsystem {
-    'Amazon': {
-        Package { allow_virtual => false }
-    }
-    default: {}
-  }
-
   sysctl::config {
     'fs.file-max':                  value => 6553600;
     'kernel.randomize_va_space':    value => 1;

@@ -11,7 +11,7 @@
 #
 class sysctl
   inherits ::sysctl::params {
-  $sysctl_config = hiera('sysctl',{})
+  $sysctl_config = hiera_hash('sysctl',{})
   create_resources('sysctl::config',$sysctl_config)
 
 }

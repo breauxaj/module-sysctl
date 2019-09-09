@@ -15,10 +15,14 @@ sysctl::config {
 }
 ```
 
-License
--------
-GPL3
-
-Contact
--------
-breauxaj AT gmail DOT com
+Hiera
+-----
+```
+sysctl:
+  fs.file-max:
+    value: '6815744'
+  kernel.exec-shield:
+    value: '1'
+  kernel.randomize_va_space:
+    value: '1'
+```
